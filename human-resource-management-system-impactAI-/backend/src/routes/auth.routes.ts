@@ -15,14 +15,13 @@ const registerSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
   name: z.string().optional(),
-  role: z.enum(['ADMIN', 'EMPLOYEE']).optional(),
 });
 
 router.post('/register', async (req: Request, res: Response) => {
   const parsed = registerSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ message: 'Invalid input' });
 
-  const { email, password, role, name } = parsed.data;
+  const { email, password, name } = parsed.data;
   const userCollection = await users();
   const existing = await userCollection.findOne({ email });
   if (existing) return res.status(400).json({ message: 'User already exists' });
@@ -31,7 +30,7 @@ router.post('/register', async (req: Request, res: Response) => {
   const result = await userCollection.insertOne({
     email,
     passwordHash,
-    role: role ?? 'EMPLOYEE',
+    role: 'EMPLOYEE',
     name: name ?? null,
     ...nowFields(),
   });

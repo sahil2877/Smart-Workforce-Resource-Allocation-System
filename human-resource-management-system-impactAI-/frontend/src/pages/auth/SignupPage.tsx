@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Check, X, ShieldAlert, ShieldCheck, Shield } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import { Select } from '../../components/ui/Select';
 import { useAuth } from '../../contexts/AuthContext';
 import { validateEmail, validatePassword, validateName, getPasswordStrength } from '../../services/validationService';
 import { SignupCredentials, UserRole } from '../../types/auth';
@@ -159,20 +158,6 @@ export function SignupPage() {
             value={formData.email}
             onChange={handleChange}
             error={errors.email}
-            required
-            disabled={isLoading}
-          />
-
-          <Select
-            id="role"
-            name="role"
-            label="Role"
-            value={formData.role}
-            onChange={handleChange}
-            options={[
-              { label: 'Employee', value: 'EMPLOYEE' },
-              { label: 'Admin', value: 'ADMIN' },
-            ]}
             required
             disabled={isLoading}
           />
